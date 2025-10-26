@@ -1,0 +1,12 @@
+pandas
+numpy
+sentence-transformers
+faiss-cpu
+psycopg2-binary
+sqlalchemy
+openai
+python-dotenv
+arxiv
+matplotlib
+seaborn
+jupyter

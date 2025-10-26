@@ -1,0 +1,37 @@
+# Virtual Environment
+venv/
+env/
+
+# Data files (too large for GitHub)
+data/raw/*
+data/processed/*
+*.csv
+*.pkl
+*.json
+
+# Keep folder structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# macOS
+.DS_Store
+
+# Logs
+logs/*.log
+logs/*
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
