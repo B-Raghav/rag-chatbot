@@ -278,4 +278,4 @@ This project uses the arXiv dataset under open access licenses. All code is avai
 - Anthropic Claude for development assistance
 - Sentence-transformers and FAISS communities
 - Ollama team for local LLM infrastructure
-- ---
+- ---123
