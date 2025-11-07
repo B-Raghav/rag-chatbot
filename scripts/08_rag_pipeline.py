@@ -192,5 +192,6 @@ if __name__ == "__main__":
     
     chatbot.close()
     print("\n" + "="*60)
-    print("Test Complete!")
+    print("Test Completed ")
     print("="*60)
+     
