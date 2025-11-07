@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAG Chatbot - CS Research Papers</title>
+    <title>Research Papers Chat</title>
     <style>
         * {
             margin: 0;
@@ -12,43 +12,39 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
             min-height: 100vh;
-            padding: 20px;
+            padding: 60px 24px 24px;
         }
         
         .container {
-            max-width: 900px;
+            max-width: 760px;
             margin: 0 auto;
         }
         
         .header {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
-            text-align: center;
+            margin-bottom: 32px;
         }
         
         h1 {
-            color: #667eea;
-            font-size: 32px;
-            margin-bottom: 10px;
+            color: #111;
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
         
         .subtitle {
             color: #666;
-            font-size: 16px;
+            font-size: 15px;
+            font-weight: 400;
         }
         
         .chat-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            padding: 30px;
-            min-height: 500px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            min-height: 520px;
             display: flex;
             flex-direction: column;
         }
@@ -56,146 +52,202 @@
         .messages {
             flex: 1;
             overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 10px;
+            padding: 24px;
+        }
+        
+        .messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .messages::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 3px;
         }
         
         .message {
             margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 10px;
+            font-size: 15px;
+            line-height: 1.5;
         }
         
         .user-message {
-            background: #667eea;
-            color: white;
-            margin-left: 50px;
+            text-align: right;
         }
         
-        .bot-message {
-            background: #f0f0f0;
-            margin-right: 50px;
+        .user-message .bubble {
+            display: inline-block;
+            background: #3182ce;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 16px;
+            max-width: 65%;
+            text-align: left;
+        }
+        
+        .bot-message .bubble {
+            display: inline-block;
+            background: #edf2f7;
+            color: #2d3748;
+            padding: 10px 14px;
+            border-radius: 16px;
+            max-width: 80%;
         }
         
         .sources {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #ddd;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .sources > strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #718096;
+            font-size: 13px;
+            font-weight: 500;
         }
         
         .source-item {
-            padding: 10px;
-            background: white;
-            border-left: 3px solid #667eea;
-            margin-bottom: 8px;
+            padding: 8px 10px;
+            background: #f7fafc;
+            margin-bottom: 6px;
             font-size: 13px;
+            border-radius: 6px;
+            border-left: 3px solid #3182ce;
         }
         
         .source-title {
-            font-weight: bold;
-            color: #333;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 2px;
         }
         
         .source-category {
-            color: #667eea;
+            color: #a0aec0;
             font-size: 12px;
         }
         
         .metrics {
-            font-size: 12px;
-            color: #999;
+            font-size: 11px;
+            color: #a0aec0;
             margin-top: 10px;
         }
         
         .input-container {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            padding: 16px;
+            border-top: 1px solid #e2e8f0;
         }
         
         #query-input {
             flex: 1;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 10px 14px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 15px;
+            color: #2d3748;
+        }
+        
+        #query-input::placeholder {
+            color: #a0aec0;
         }
         
         #query-input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #3182ce;
+            background: #fff;
         }
         
         #send-btn {
-            padding: 15px 30px;
-            background: #667eea;
-            color: white;
+            padding: 10px 20px;
+            background: #111;
+            color: #f5f5f5;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.2s;
         }
         
         #send-btn:hover {
-            background: #5568d3;
+            background: #e5e5e5;
+            color: #111;
         }
         
         #send-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
+            background: #cbd5e0;
+            color: #a0aec0;
+            cursor: default;
         }
         
         .loading {
             text-align: center;
-            color: #667eea;
+            color: #718096;
             padding: 20px;
+            font-size: 14px;
         }
         
         .example-queries {
-            margin-top: 15px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .example-queries > strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-size: 13px;
+            font-weight: 500;
         }
         
         .example-btn {
             display: inline-block;
-            padding: 8px 15px;
-            background: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            margin: 5px;
+            padding: 6px 12px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            margin: 3px 3px 3px 0;
             cursor: pointer;
             font-size: 13px;
-            transition: all 0.3s;
+            color: #2d3748;
         }
         
         .example-btn:hover {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
+            background: #edf2f7;
+            border-color: #3182ce;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>RAG Chatbot</h1>
-            <p class="subtitle">Ask questions about 547,896 Computer Science research papers (2020-2024)</p>
+            <h1>Research Assistant</h1>
+            <p class="subtitle">Search through computer science papers</p>
         </div>
         
         <div class="chat-container">
             <div class="messages" id="messages">
                 <div class="message bot-message">
-                    <strong>Welcome!</strong> I can answer questions about computer science research papers from arXiv.
-                    <div class="example-queries">
-                        <strong>Try asking:</strong><br>
-                        <span class="example-btn" onclick="askExample('What are the latest techniques in computer vision?')">Computer Vision Techniques</span>
-                        <span class="example-btn" onclick="askExample('How do transformers work in NLP?')">Transformers in NLP</span>
-                        <span class="example-btn" onclick="askExample('What are applications of reinforcement learning?')">Reinforcement Learning</span>
+                    <div class="bubble">
+                        Ask me about machine learning, computer vision, NLP, or any CS topic.
+                        <div class="example-queries">
+                            <strong>Try</strong>
+                            <div>
+                                <span class="example-btn" onclick="askExample('What are the latest techniques in computer vision?')">Computer Vision</span>
+                                <span class="example-btn" onclick="askExample('How do transformers work in NLP?')">Transformers</span>
+                                <span class="example-btn" onclick="askExample('What are applications of reinforcement learning?')">RL Applications</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="input-container">
-                <input type="text" id="query-input" placeholder="Ask a question about CS research..." onkeypress="handleKeyPress(event)">
+                <input type="text" id="query-input" placeholder="Ask a question" onkeypress="handleKeyPress(event)">
                 <button id="send-btn" onclick="sendQuery()">Send</button>
             </div>
         </div>
@@ -206,7 +258,7 @@
             const messagesDiv = document.getElementById('messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-            messageDiv.innerHTML = content;
+            messageDiv.innerHTML = `<div class="bubble">${content}</div>`;
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
@@ -216,7 +268,7 @@
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'loading';
             loadingDiv.id = 'loading';
-            loadingDiv.innerHTML = '🔍 Searching papers and generating response...';
+            loadingDiv.innerHTML = 'Searching papers...';
             messagesDiv.appendChild(loadingDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
@@ -253,18 +305,18 @@
                 if (data.error) {
                     addMessage(`Error: ${data.error}`, false);
                 } else {
-                    let sourcesHTML = '<div class="sources"><strong>📚 Sources:</strong>';
+                    let sourcesHTML = '<div class="sources"><strong>Sources</strong>';
                     data.sources.forEach((source, idx) => {
                         sourcesHTML += `
                             <div class="source-item">
                                 <div class="source-title">${idx + 1}. ${source.title}</div>
-                                <div class="source-category">${source.categories} | Similarity: ${source.similarity.toFixed(3)}</div>
+                                <div class="source-category">${source.categories} · ${source.similarity.toFixed(3)}</div>
                             </div>
                         `;
                     });
-                    sourcesHTML += `<div class="metrics">⏱️ Retrieval: ${data.retrieval_time}ms | Generation: ${data.generation_time}ms | Total: ${data.total_time}ms</div></div>`;
+                    sourcesHTML += `<div class="metrics">${data.retrieval_time}ms · ${data.generation_time}ms · ${data.total_time}ms</div></div>`;
                     
-                    addMessage(`<strong>Answer:</strong><br>${data.response}${sourcesHTML}`, false);
+                    addMessage(`${data.response}${sourcesHTML}`, false);
                 }
             } catch (error) {
                 removeLoading();
