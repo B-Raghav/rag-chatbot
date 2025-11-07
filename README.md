@@ -14,7 +14,7 @@ This project builds an intelligent chatbot using RAG to answer questions about c
 
 ### Key Features
 
-- 547,896 CS research papers (2020-2024)
+- 547,896 CS research papers
 - Hybrid database: PostgreSQL and FAISS
 - Semantic search using sentence-transformers
 - Local LLM inference using Ollama (Mistral model)
