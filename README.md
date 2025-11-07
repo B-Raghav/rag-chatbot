@@ -258,27 +258,6 @@ We compare baseline LLM (without RAG) vs our RAG system:
 - Average query latency
 - Source attribution accuracy
 
-## Troubleshooting
-
-**Ollama connection refused:**
-
-- Make sure Ollama is running: `ollama serve`
-- Check if Mistral model is installed: `ollama list`
-
-**PostgreSQL connection error:**
-
-- Start PostgreSQL: `brew services start postgresql@15`
-- Verify database exists: `psql -l | grep rag_chatbot_db`
-
-**FAISS index not found:**
-
-- Run the embedding and index building scripts in order
-- Check that `data/processed/faiss_index.bin` exists
-
-**Import errors:**
-
-- Activate virtual environment: `source venv/bin/activate`
-- Reinstall requirements: `pip install -r requirements.txt`
 
 ## Future Improvements
 
