@@ -1,19 +1,18 @@
-    import pandas as pd
+import pandas as pd
 import psycopg2
 from datetime import datetime
 
-print("📥 Loading data into PostgreSQL...")
+print("Loading data into PostgreSQL...")
 
 # Load the processed data
 print("Reading processed data...")
 df = pd.read_pickle('data/processed/cs_papers_2020_2024.pkl')
 
-# Sample down to manageable size for development (optional)
-# Use all 547k papers or sample 50k for faster testing
-USE_SAMPLE = True  # Change to False to use all papers
+# Sample or use all papers
+USE_SAMPLE = False  # Set to False to use all 547k papers
 if USE_SAMPLE:
     df = df.sample(n=50000, random_state=42)
-    print(f"Using sample of {len(df)} papers for development")
+    print(f"Using sample of {len(df)} papers")
 else:
     print(f"Using all {len(df)} papers")
 
@@ -44,19 +43,19 @@ for idx, row in df.iterrows():
             row['authors'],
             row['categories'],
             row['abstract'],
-            None,  # publication_date not in dataset
+            None,
             row['update_date'],
             row['word_count']
         ))
         inserted += 1
         
-        if inserted % 5000 == 0:
+        if inserted % 10000 == 0:
             conn.commit()
             print(f"  Inserted {inserted} documents...")
             
     except Exception as e:
         errors += 1
-        if errors < 5:  # Only print first few errors
+        if errors < 5:
             print(f"  Error inserting {row['id']}: {e}")
 
 # Final commit
@@ -69,7 +68,7 @@ count = cursor.fetchone()[0]
 cursor.close()
 conn.close()
 
-print(f"\n✅ Data loading complete!")
+print(f"\nData loading complete!")
 print(f"  Successfully inserted: {inserted} documents")
 print(f"  Errors: {errors}")
 print(f"  Total in database: {count}")

@@ -10,3 +10,4 @@ arxiv
 matplotlib
 seaborn
 jupyter
+flask
